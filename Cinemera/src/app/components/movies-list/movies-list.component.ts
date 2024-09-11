@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { MovieService } from '../../services/movie.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';  
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movies-list',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule  
+    FormsModule ,
   ],
   templateUrl: './movies-list.component.html',
   styleUrl: './movies-list.component.css'
@@ -19,7 +20,7 @@ export class MoviesListComponent implements OnInit {
   searchQuery = ''; 
   watchlist: any[] = [];  
 
-  constructor(private movieService: MovieService) {}
+  constructor(private movieService: MovieService, private router: Router) {}
 
   ngOnInit(): void {
     this.getMoviesByPage(this.currentPage);  // Load now playing movies on init
@@ -36,11 +37,8 @@ export class MoviesListComponent implements OnInit {
   // Search movies based on query
   searchMovies(): void {
     if (this.searchQuery.trim()) {
-      this.movieService.searchMovies(this.searchQuery).subscribe((data: any) => {
-        this.movies = data.results;  // Replace current movies with search results
-      });
-    } else {
-      this.getMoviesByPage(this.currentPage);  // Reload now playing movies if search is cleared
+      // Navigate to search results page with the query
+      this.router.navigate(['/search'], { queryParams: { query: this.searchQuery } });
     }
   }
 
@@ -81,4 +79,5 @@ export class MoviesListComponent implements OnInit {
       this.getMoviesByPage(this.currentPage);
     }
   }
+
 }

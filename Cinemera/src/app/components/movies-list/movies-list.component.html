@@ -5,9 +5,9 @@
       <h1>Welcome to our movie app</h1>
       <p>Millions of movies, TV shows, and people to discover. Explore now.</p>
       <div class="input-group mb-4 w-50 mx-auto">
-        <input type="text" class="form-control" placeholder="Search for movies..." />
+        <input type="text" [(ngModel)]="searchQuery" class="form-control" placeholder="Search for movies..." />
         <div class="input-group-append">
-          <button class="btn btn-warning" type="button">
+          <button class="btn btn-warning" type="button" (click)="searchMovies()">
             <i class="fas fa-search"></i> Search
           </button>
         </div>
