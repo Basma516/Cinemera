@@ -1,7 +1,9 @@
 import { Routes } from '@angular/router';
 import { MoviesListComponent } from './components/movies-list/movies-list.component';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
-import { WishlistComponent } from './components/wishlist/wishlist.component';
+import { WatchlistComponent } from './components/watchlist/watchlist.component';
+
+
 
 export const routes: Routes = [
     {
@@ -15,7 +17,7 @@ export const routes: Routes = [
    },
    {
        path: 'watchlist',
-        component: WishlistComponent,
+        component: WatchlistComponent,
         title: 'Watchlist',
    }
 ];

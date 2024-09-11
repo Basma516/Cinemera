@@ -1,0 +1,32 @@
+/* Styling for the Remove button */
+.btn-link {
+    text-decoration: none;  /* Remove underline */
+    font-weight: bold;      /* Make text bold */
+    color: #dc3545;         /* Default color (Bootstrap danger color) */
+    transition: color 0.3s ease; /* Smooth color transition */
+  }
+  
+  .btn-link:hover {
+    color: #b32428;         /* Darken the color on hover */
+  }
+  
+  .btn-link i {
+    margin-right: 5px;      /* Space between the trash icon and text */
+    transition: transform 0.3s ease; /* Smooth hover effect */
+  }
+  
+  .btn-link:hover i {
+    transform: scale(1.1);  /* Slightly increase the icon size on hover */
+  }
+  
+  /* Add a little more spacing to the card */
+  .movie-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border-radius: 8px;                       /* Rounded corners */
+  }
+  
+  .movie-card img {
+    border-top-left-radius: 8px;  /* Match the top of the card radius */
+    border-top-right-radius: 8px;
+  }
+  
