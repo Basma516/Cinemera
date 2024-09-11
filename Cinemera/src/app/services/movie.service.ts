@@ -24,4 +24,12 @@ export class MovieService {
   (movieId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/movie/${movieId}/recommendations?api_key=${this.apiKey}`);
   }
+  
+  searchMovies(query: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/search/movie?api_key=${this.apiKey}&query=${query}`);
+  }
+
+  getPaginatedMovies(page: number = 1): Observable<any> {
+    return this.http.get(`${this.apiUrl}/movie/popular?api_key=${this.apiKey}&page=${page}`);
+  }
 }
