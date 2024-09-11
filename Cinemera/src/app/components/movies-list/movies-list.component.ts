@@ -33,7 +33,10 @@ export class MoviesListComponent implements OnInit {
       this.movies = data.results;
     });
   }
-
+  goToMovieDetails(movieId: number): void {
+    this.router.navigate(['/movies', movieId]);  // Ensure the route is correctly formed
+  }
+  
   // Search movies based on query
   searchMovies(): void {
     if (this.searchQuery.trim()) {

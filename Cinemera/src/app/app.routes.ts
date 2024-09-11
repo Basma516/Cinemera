@@ -7,19 +7,21 @@ import { WatchlistComponent } from './components/watchlist/watchlist.component';
 
 
 export const routes: Routes = [
-    {
-        path: 'movie/:id',  
-        component: MovieDetailsComponent,
-      },
-
-
+  
 
     {
         path: '',
         component: MoviesListComponent,
         title: 'Movies List',
       }
-    ,{path: 'search',
+    ,
+    {
+        path: 'movies/:id',  
+        component: MovieDetailsComponent,
+      },
+
+
+    {path: 'search',
         component: SearchResultsComponent,
        title: 'Search Results',
    },
@@ -27,5 +29,6 @@ export const routes: Routes = [
        path: 'watchlist',
         component: WatchlistComponent,
         title: 'Watchlist',
-   }
+   },
+   { path: '**', redirectTo: '' }  // Wildcard route
 ];

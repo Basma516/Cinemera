@@ -1,0 +1,54 @@
+.movie-details {
+    padding: 20px;
+  }
+  
+  .movie-header {
+    display: flex;
+  }
+  
+  .movie-header img {
+    width: 300px;
+    height: auto;
+  }
+  
+  .movie-info {
+    margin-left: 20px;
+  }
+  
+  .movie-info h1 {
+    margin: 0;
+  }
+  
+  .details-meta span {
+    display: block;
+  }
+  
+  .studio img {
+    width: 100px;
+  }
+  
+  button {
+    background-color: yellow;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+  }
+  
+  button.active {
+    background-color: black;
+    color: white;
+  }
+  
+  .recommendations {
+    margin-top: 40px;
+  }
+  
+  .recommendations-list {
+    display: flex;
+    overflow-x: scroll;
+  }
+  
+  .recommendation-card {
+    margin-right: 10px;
+  }
+  

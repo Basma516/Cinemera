@@ -1,1 +1,55 @@
-<p>movie-details works!</p>
+<div class="container mt-5">
+    <!-- Movie Details Section -->
+    <div *ngIf="movie">
+      <div class="row">
+        <div class="col-md-4">
+          <img 
+            class="img-fluid" 
+            [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" 
+            [alt]="movie.title" />
+        </div>
+  
+        <div class="col-md-8">
+          <h3>{{ movie.title }}</h3>
+          <p><strong>Release Date:</strong> {{ movie.release_date | date:'MMM d, y' }}</p>
+          <p><strong>Rating:</strong> {{ movie.vote_average | number:'1.1-1' }}</p>
+          <p><strong>Overview:</strong> {{ movie.overview }}</p>
+          
+          <!-- Watchlist Button -->
+          <button 
+            class="btn btn-warning" 
+            (click)="toggleWatchlist(movie)">
+            <i class="fas fa-heart" [ngClass]="isInWatchlist(movie.id) ? 'text-danger' : 'text-muted'"></i>
+            {{ isInWatchlist(movie.id) ? 'Remove from Watchlist' : 'Add to Watchlist' }}
+          </button>
+  
+          <!-- Back to List Button -->
+          <button class="btn btn-secondary ml-3" (click)="goBack()">Back to List</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Recommendations Section -->
+    <div *ngIf="recommendations.length > 0" class="mt-5">
+      <h4 class="text-warning">Recommended Movies</h4>
+      <div class="row">
+        <div *ngFor="let movie of recommendations" class="col-md-3 mb-4">
+          <div class="card movie-card h-100 position-relative">
+            <img 
+              class="card-img-top" 
+              [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" 
+              [alt]="movie.title" />
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ movie.title }}</h5>
+              <button 
+                class="btn btn-warning" 
+                (click)="toggleWatchlist(movie)">
+                <i class="fas fa-heart" [ngClass]="isInWatchlist(movie.id) ? 'text-danger' : 'text-muted'"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
