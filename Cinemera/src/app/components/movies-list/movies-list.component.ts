@@ -1,12 +1,84 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MovieService } from '../../services/movie.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';  
 
 @Component({
   selector: 'app-movies-list',
   standalone: true,
-  imports: [],
+  imports: [
+    CommonModule,
+    FormsModule  
+  ],
   templateUrl: './movies-list.component.html',
   styleUrl: './movies-list.component.css'
 })
-export class MoviesListComponent {
+export class MoviesListComponent implements OnInit {
+  movies: any[] = [];
+  currentPage = 1;
+  searchQuery = ''; 
+  watchlist: any[] = [];  
 
+  constructor(private movieService: MovieService) {}
+
+  ngOnInit(): void {
+    this.getMoviesByPage(this.currentPage);  // Load now playing movies on init
+    this.loadWatchlist();  // Load the current watchlist
+  }
+
+  // Fetch paginated movies (Now Playing)
+  getMoviesByPage(page: number): void {
+    this.movieService.getPaginatedMovies(page).subscribe((data: any) => {
+      this.movies = data.results;
+    });
+  }
+
+  // Search movies based on query
+  searchMovies(): void {
+    if (this.searchQuery.trim()) {
+      this.movieService.searchMovies(this.searchQuery).subscribe((data: any) => {
+        this.movies = data.results;  // Replace current movies with search results
+      });
+    } else {
+      this.getMoviesByPage(this.currentPage);  // Reload now playing movies if search is cleared
+    }
+  }
+
+  // Add or Remove movie from the watchlist
+  toggleWatchlist(movie: any): void {
+    // Check if the movie already exists in the watchlist
+    const movieExists = this.watchlist.some((item) => item.id === movie.id);
+    if (movieExists) {
+      this.movieService.removeFromWatchlist(movie);  // Remove the movie from the watchlist
+    } else {
+      this.movieService.addToWatchlist(movie);  // Add the movie to the watchlist
+    }
+    this.loadWatchlist();  // Reload the watchlist after adding/removing
+  }
+
+  // Check if a movie is in the watchlist
+  isInWatchlist(movieId: number): boolean {
+    return this.watchlist.some((movie) => movie.id === movieId);
+  }
+
+  // Load watchlist from the service
+  loadWatchlist(): void {
+    this.movieService.getWatchlist().subscribe((watchlist) => {
+      this.watchlist = watchlist;
+    });
+  }
+
+  // Go to the next page
+  nextPage(): void {
+    this.currentPage++;
+    this.getMoviesByPage(this.currentPage);
+  }
+
+  // Go to the previous page
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.getMoviesByPage(this.currentPage);
+    }
+  }
 }

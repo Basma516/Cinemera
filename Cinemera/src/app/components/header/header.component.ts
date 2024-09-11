@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MovieService } from '../../services/movie.service';
 
 @Component({
   selector: 'app-header',
@@ -8,5 +9,15 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  watchlistCount = 0;
+
+  constructor(private movieService: MovieService) {}
+
+  ngOnInit(): void {
+    this.movieService.getWatchlist().subscribe((watchlist) => {
+      this.watchlistCount = watchlist.length;
+    });
+  }
+
 
 }
