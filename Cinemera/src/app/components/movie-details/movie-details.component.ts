@@ -1,21 +1,23 @@
+// src/app/components/movie-details/movie-details.component.ts
+
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../../services/movie.service';
 import { CommonModule } from '@angular/common';
+import { Movie } from '../../types/movie'; 
 
 @Component({
   selector: 'app-movie-details',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './movie-details.component.html',
-  styleUrl: './movie-details.component.css'
+  styleUrls: ['./movie-details.component.css'] // Changed styleUrl to styleUrls
 })
 export class MovieDetailsComponent {
-  movie: any= { genre_ids: [] };              // Movie details
-  recommendations: any[] = [];   // Initialize recommendations to an empty array
-  watchlist: any[] = [];    // Current watchlist
-  popularMovies: any[] = [];
-  // movie: any = { genre_ids: [] }; // Initialize with default values
+  movie: Movie | null = null;              // Movie details
+  recommendations: Movie[] = [];           // Initialize recommendations to an empty array
+  watchlist: Movie[] = [];                 // Current watchlist
+  popularMovies: Movie[] = [];
 
   // Define the genre mapping
   genreMap: { [key: number]: string } = {
@@ -36,6 +38,7 @@ export class MovieDetailsComponent {
     10752: 'War',
     37: 'Western',
   };
+
   constructor(
     private route: ActivatedRoute,
     private movieService: MovieService,
@@ -49,6 +52,7 @@ export class MovieDetailsComponent {
     this.loadWatchlist();
     this.loadPopularMovies();
   }
+
   loadPopularMovies(): void {
     this.movieService.getPopularMovies().subscribe(
       (data) => {
@@ -59,25 +63,26 @@ export class MovieDetailsComponent {
       }
     );
   }
+
   // Fetch movie details
   getMovieDetails(id: number): void {
-    this.movieService.getCinemeraMovieDetails(id).subscribe((data: any) => {
+    this.movieService.getCinemeraMovieDetails(id).subscribe((data: Movie) => {
       this.movie = data;
       console.log('Movie details:', this.movie); // Log to check structure
     });
   }
+
   getStarRating(rating: number) {
     const fullStars = Math.floor(rating / 2); // Full stars (out of 5)
     const halfStar = rating % 2 >= 1 ? 1 : 0; // Check if there's a half-star
     const emptyStars = 5 - fullStars - halfStar; // Remaining stars are empty
-  
+
     return { fullStars, halfStar, emptyStars };
   }
-  
 
   // Fetch movie recommendations
   getRecommendations(movieId: number): void {
-    this.movieService.getCinemeraRecommendations(movieId).subscribe((data: any) => {
+    this.movieService.getCinemeraRecommendations(movieId).subscribe((data: { results: Movie[] }) => {
       this.recommendations = data.results;
     });
   }
@@ -90,7 +95,7 @@ export class MovieDetailsComponent {
   }
 
   // Add or remove movie from watchlist
-  toggleWatchlist(movie: any): void {
+  toggleWatchlist(movie: Movie): void {
     const isMovieInWatchlist = this.watchlist.some((item) => item.id === movie.id);
     if (isMovieInWatchlist) {
       this.movieService.removeFromWatchlist(movie);
@@ -107,8 +112,6 @@ export class MovieDetailsComponent {
 
   // Navigate back to movies list
   goBack(): void {
-    this.router.navigate(['/movies']);  // Adjust the route to your movie list page
+    this.router.navigate(['']);  // Adjust the route to your movie list page
   }
-
-  
 }
