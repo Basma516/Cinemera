@@ -4,6 +4,7 @@ import { MovieDetailsComponent } from './components/movie-details/movie-details.
 import { MoviesListComponent } from './components/movies-list/movies-list.component';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
 import { WatchlistComponent } from './components/watchlist/watchlist.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 export const routes: Routes = [
@@ -30,5 +31,6 @@ export const routes: Routes = [
         component: WatchlistComponent,
         title: 'Watchlist',
    },
-   { path: '**', redirectTo: '' }  // Wildcard route
+   { path: '**', component: NotFoundComponent } // Wildcard route for 404
+
 ];
