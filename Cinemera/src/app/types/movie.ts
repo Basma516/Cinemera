@@ -24,7 +24,7 @@ export interface Genre {
   
   export interface Movie {
     adult: boolean;
-    backdrop_path: string | null; // Can be null if not available
+    backdrop_path: string | null; 
     belongs_to_collection?: {
       backdrop_path: string | null;
       id: number;
@@ -33,24 +33,24 @@ export interface Genre {
     };
     budget: number;
     genres: Genre[];
-    homepage: string | null; // Can be null if not available
+    homepage: string | null; 
     id: number;
-    imdb_id: string | null; // Can be null if not available
+    imdb_id: string | null; 
     original_language: string;
     original_title: string;
     overview: string;
     popularity: number;
-    poster_path: string | null; // Can be null if not available
+    poster_path: string | null;
     production_companies: ProductionCompany[];
     production_countries: ProductionCountry[];
-    release_date: string; // Date as a string
+    release_date: string;
     revenue: number;
-    runtime: number; // Runtime in minutes
+    runtime: number; 
     spoken_languages: SpokenLanguage[];
     status: string;
-    tagline: string | null; // Can be null if not available
+    tagline: string | null; 
     title: string;
     video: boolean;
-    vote_average: number; // Average rating
-    vote_count: number; // Total votes
+    vote_average: number;
+    vote_count: number; 
   }
