@@ -49,4 +49,8 @@ export class MovieService {
     const currentWatchlist = this.watchlist.getValue();
     this.watchlist.next(currentWatchlist.filter(m => m.id !== movie.id));
   }
+
+getPopularMovies(): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/movie/popular?api_key=${this.apiKey}`);
+}
 }

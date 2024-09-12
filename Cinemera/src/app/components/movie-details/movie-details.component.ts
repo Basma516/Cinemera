@@ -11,10 +11,31 @@ import { CommonModule } from '@angular/common';
   styleUrl: './movie-details.component.css'
 })
 export class MovieDetailsComponent {
-  movie: any;              // Movie details
+  movie: any= { genre_ids: [] };              // Movie details
   recommendations: any[] = [];   // Initialize recommendations to an empty array
   watchlist: any[] = [];    // Current watchlist
-  
+  popularMovies: any[] = [];
+  // movie: any = { genre_ids: [] }; // Initialize with default values
+
+  // Define the genre mapping
+  genreMap: { [key: number]: string } = {
+    28: 'Action',
+    12: 'Adventure',
+    16: 'Animation',
+    35: 'Comedy',
+    80: 'Crime',
+    99: 'Documentary',
+    18: 'Drama',
+    10749: 'Romance',
+    878: 'Science Fiction',
+    27: 'Horror',
+    10402: 'Music',
+    9648: 'Mystery',
+    10770: 'TV Movie',
+    53: 'Thriller',
+    10752: 'War',
+    37: 'Western',
+  };
   constructor(
     private route: ActivatedRoute,
     private movieService: MovieService,
@@ -26,14 +47,33 @@ export class MovieDetailsComponent {
     this.getMovieDetails(movieId);
     this.getRecommendations(movieId);
     this.loadWatchlist();
+    this.loadPopularMovies();
   }
-
+  loadPopularMovies(): void {
+    this.movieService.getPopularMovies().subscribe(
+      (data) => {
+        this.popularMovies = data.results;
+      },
+      (error) => {
+        console.error('Error fetching popular movies:', error);
+      }
+    );
+  }
   // Fetch movie details
   getMovieDetails(id: number): void {
     this.movieService.getCinemeraMovieDetails(id).subscribe((data: any) => {
       this.movie = data;
+      console.log('Movie details:', this.movie); // Log to check structure
     });
   }
+  getStarRating(rating: number) {
+    const fullStars = Math.floor(rating / 2); // Full stars (out of 5)
+    const halfStar = rating % 2 >= 1 ? 1 : 0; // Check if there's a half-star
+    const emptyStars = 5 - fullStars - halfStar; // Remaining stars are empty
+  
+    return { fullStars, halfStar, emptyStars };
+  }
+  
 
   // Fetch movie recommendations
   getRecommendations(movieId: number): void {
@@ -69,4 +109,6 @@ export class MovieDetailsComponent {
   goBack(): void {
     this.router.navigate(['/movies']);  // Adjust the route to your movie list page
   }
+
+  
 }

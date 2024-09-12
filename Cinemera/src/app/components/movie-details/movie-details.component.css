@@ -1,54 +1,99 @@
-.movie-details {
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .movie-card {
+    border: none;
+    transition: transform 0.3s ease;
+  }
+
+  .movie-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .star-rating i {
+    font-size: 1.2em;
+    margin-right: 2px;
+  }
+
+  .btn-warning {
+    background-color: #ffc107;
+    border: none;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-warning:hover {
+    background-color: #e0a800;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+
+  .badge {
+    background-color: #ffc107;
+    color: #333;
+    font-size: 0.8em;
+    padding: 0.5em 1em;
+    border-radius: 20px;
+  }
+
+  .movie-details {
+   /* background-color: #fff; */
     padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
-  
-  .movie-header {
-    display: flex;
+
+  .movie-details h3 {
+    color: #ffc107;
   }
-  
-  .movie-header img {
-    width: 300px;
+
+  .movie-details p {
+    line-height: 1.6;
+  }
+
+  .movie-details img {
+    max-width: 100%;
     height: auto;
   }
-  
-  .movie-info {
-    margin-left: 20px;
-  }
-  
-  .movie-info h1 {
-    margin: 0;
-  }
-  
-  .details-meta span {
-    display: block;
-  }
-  
-  .studio img {
-    width: 100px;
-  }
-  
-  button {
-    background-color: yellow;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-  }
-  
-  button.active {
-    background-color: black;
-    color: white;
-  }
-  
-  .recommendations {
-    margin-top: 40px;
-  }
-  
-  .recommendations-list {
+
+  .movie-details .production-companies {
     display: flex;
-    overflow-x: scroll;
+    flex-wrap: wrap;
+    /* justify-content: center; */
   }
-  
-  .recommendation-card {
-    margin-right: 10px;
+
+  .movie-details .production-companies img {
+    max-width: 50px;
+    height: 50px;
+    margin: 5px;
   }
-  
+
+  @media (max-width: 768px) {
+    .col-md-4 {
+      width: 100%;
+    }
+
+    .col-md-8 {
+      width: 100%;
+    }
+
+    .movie-card {
+      margin-bottom: 15px;
+    }
+
+    .movie-details .production-companies {
+      flex-direction: column;
+      align-items: center;
+    }}

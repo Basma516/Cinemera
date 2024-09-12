@@ -21,6 +21,8 @@
                   <i class="fas fa-heart" [ngClass]="isInWatchlist(movie.id) ? 'text-warning' : 'text-muted'"></i>
                 </button>
               </div>
+              <button class="btn btn-warning mt-2" (click)="goToMovieDetails(movie.id)">View Details</button>
+
             </div>
           </div>
         </div>

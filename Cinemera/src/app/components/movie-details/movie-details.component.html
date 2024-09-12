@@ -1,55 +1,102 @@
-<div class="container mt-5">
+
     <!-- Movie Details Section -->
-    <div *ngIf="movie">
+    <div *ngIf="movie" class="movie-details">
       <div class="row">
         <div class="col-md-4">
-          <img 
-            class="img-fluid" 
-            [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" 
+          <img
+            class="img-fluid rounded shadow"
+            [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
             [alt]="movie.title" />
         </div>
-  
+
         <div class="col-md-8">
-          <h3>{{ movie.title }}</h3>
-          <p><strong>Release Date:</strong> {{ movie.release_date | date:'MMM d, y' }}</p>
-          <p><strong>Rating:</strong> {{ movie.vote_average | number:'1.1-1' }}</p>
-          <p><strong>Overview:</strong> {{ movie.overview }}</p>
-          
+          <h3 class="text-warning">{{ movie.title }}</h3>
+          <p class="text-muted"><strong>Release Date:</strong> {{ movie.release_date | date:'MMM d, y' }}</p>
+
+          <div class="star-rating mb-2">
+            <!-- Display Full Stars -->
+            <ng-container *ngFor="let star of [].constructor(getStarRating(movie.vote_average).fullStars)">
+              <i class="fas fa-star text-warning"></i>
+            </ng-container>
+
+            <!-- Display Half Star if applicable -->
+            <ng-container *ngIf="getStarRating(movie.vote_average).halfStar">
+              <i class="fas fa-star-half-alt text-warning"></i>
+            </ng-container>
+
+            <!-- Display Empty Stars -->
+            <ng-container *ngFor="let star of [].constructor(getStarRating(movie.vote_average).emptyStars)">
+              <i class="far fa-star text-warning"></i>
+            </ng-container>
+            <span class="text-muted">({{ movie.vote_count }})</span>
+          </div>
+
+          <p class="mt-3">{{ movie.overview }}</p>
+
+          <!-- Displaying genres as badges -->
+          <div *ngIf="movie">
+            <div class="mb-4">
+              <span *ngFor="let genre of movie.genres"
+                    class="badge bg-warning text-dark mx-1 p-2">
+                {{ genre.name }}
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <p *ngIf="movie.runtime"><strong>Duration:</strong> {{ movie.runtime }} Min.</p>
+            <div>
+              <h5>Languages:</h5>
+              <ul class="list-unstyled">
+                <li *ngFor="let language of movie.spoken_languages">
+                  <span class="  text-dark">{{ language.english_name }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="row production-companies">
+              <div *ngFor="let company of movie.production_companies" class="col-2 col-md-1 mb-3">
+                <div class="text-center">
+                  <img style="height: 50px;width: 50px;" *ngIf="company.logo_path" [src]="'https://image.tmdb.org/t/p/w500' + company.logo_path" alt="{{ company.name }}" class="img-fluid mb-2 rounded" />
+                </div>
+              </div>
+            </div>
+            <a *ngIf="movie.homepage" [href]="movie.homepage" target="_blank" class="btn btn-outline-secondary">Visit Official Website</a>
+          </div>
+
           <!-- Watchlist Button -->
-          <button 
-            class="btn btn-warning" 
-            (click)="toggleWatchlist(movie)">
+          <button class="btn btn-warning" (click)="toggleWatchlist(movie)">
             <i class="fas fa-heart" [ngClass]="isInWatchlist(movie.id) ? 'text-danger' : 'text-muted'"></i>
             {{ isInWatchlist(movie.id) ? 'Remove from Watchlist' : 'Add to Watchlist' }}
           </button>
-  
+
           <!-- Back to List Button -->
           <button class="btn btn-secondary ml-3" (click)="goBack()">Back to List</button>
         </div>
       </div>
     </div>
-  
+
     <!-- Recommendations Section -->
     <div *ngIf="recommendations.length > 0" class="mt-5">
       <h4 class="text-warning">Recommended Movies</h4>
       <div class="row">
-        <div *ngFor="let movie of recommendations" class="col-md-3 mb-4">
-          <div class="card movie-card h-100 position-relative">
-            <img 
-              class="card-img-top" 
-              [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" 
-              [alt]="movie.title" />
+        <div *ngFor="let recommendedMovie of recommendations" class="col-md-3 mb-4">
+          <div class="card movie-card h-100 position-relative shadow-sm">
+            <img
+              class="card-img-top rounded"
+              [src]="'https://image.tmdb.org/t/p/w500/' + recommendedMovie.poster_path"
+              [alt]="recommendedMovie.title" />
             <div class="card-body text-center">
-              <h5 class="card-title">{{ movie.title }}</h5>
-              <button 
-                class="btn btn-warning" 
-                (click)="toggleWatchlist(movie)">
-                <i class="fas fa-heart" [ngClass]="isInWatchlist(movie.id) ? 'text-danger' : 'text-muted'"></i>
+              <h5 class="card-title">{{ recommendedMovie.title }}</h5>
+
+              <button
+                class="btn btn-warning mt-2"
+                (click)="toggleWatchlist(recommendedMovie)">
+                <i class="fas fa-heart" [ngClass]="isInWatchlist(recommendedMovie.id) ? 'text-danger' : 'text-muted'"></i>
               </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  
+ 
