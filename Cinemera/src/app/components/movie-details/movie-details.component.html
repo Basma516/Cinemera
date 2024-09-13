@@ -1,5 +1,5 @@
 <!-- Movie Details Section -->
-<div *ngIf="movie" class="movie-details bg-white">
+<div *ngIf="movie" class="movie-details" style="margin-left:30px; margin-right: 20px;">
   <div class="row">
     <div class="col-md-auto">
       <div class="image-container position-relative">
@@ -29,9 +29,9 @@
         </div>
       </div>
     </div>
-    <div class="col-md-8">
-      <h3 class="text-warning">{{ movie.title }}</h3>
-      <p class="text-muted">
+    <div class="col-md-8" style="margin-left:30px;">
+      <h3 class="text">{{ movie.title }}</h3>
+      <p class="" style="color: white;">
         {{ movie.release_date | date : "MMM d, y" }}
         -
         {{ movie.runtime | timeFormat }}.
@@ -64,10 +64,10 @@
         >
           <i class="far fa-star text-warning"></i>
         </ng-container>
-        <span class="text-muted">({{ movie.vote_count }})</span>
+        <span class=" " style="color: white;">({{ movie.vote_count }})</span>
       </div>
 
-      <p class="mt-3 text-justify movie-description">{{ movie.overview }}</p>
+      <p class="mt-3 text-justify movie-description" style="color: white !important ;">{{ movie.overview }}</p>
 
       <!-- Displaying genres as badges -->
       <div *ngIf="movie">
@@ -81,30 +81,18 @@
         </div>
       </div>
 
-      <div class="mb-4">
-        <div>
-          <h5 class="d-inline-block me-2">Languages:</h5>
-          <ul class="list-unstyled d-inline-block">
+      <div class="mb-4 " >
+        <div class="d-flex justify-content-start">
+          <h5 class="d-inline-block me-2 m-0" style="color: white;">Languages  :</h5>
+          <ul class="list-unstyled d-flex  justify-content-start m-0" style="gap:20px" >
             <li *ngFor="let language of movie.spoken_languages">
-              <span class="text-dark">{{ language.english_name }}</span>
+              <span class="" style="color: white;">{{ language.english_name }}</span>
             </li>
           </ul>
         </div>
 
-        <div class="row production-companies">
-          <ng-container *ngFor="let company of movie.production_companies">
-            <div class="col-auto mb-3" *ngIf="company.logo_path">
-              <div class="text-center">
-                <img
-                  style="max-width: none"
-                  [src]="company.logo_path"
-                  alt="{{ company.name }}"
-                  class="img-fluid mb-2 rounded"
-                />
-              </div>
-            </div>
-          </ng-container>
-        </div>
+        
+        
       </div>
       <!-- Buttons Container -->
       <div class="d-flex justify-content-start gap-3 mt-3 btn-container">
@@ -133,13 +121,14 @@
         </div>
 
         <!-- Back to List Button -->
-        <div>
+        <div >
           <button
-            class="btn btn-outline-secondary d-flex align-items-center"
+            class="btn btn-search d-flex align-items-center" 
             (click)="goBack()"
+            style="height: 45px;"
           >
             <i class="fas fa-arrow-left"></i>
-            <span class="ms-2">Back to List</span>
+            <span class="ms-2 btn btn-search " style="height: 45px;" >Back to List</span>
           </button>
         </div>
       </div>
@@ -149,37 +138,50 @@
 
 <!-- Recommendations Section -->
 <div *ngIf="recommendations.length > 0" class="mt-5">
-  <h4 class="text-warning">Recommended Movies</h4>
-  <div class="ps-3 row w-100 overflow-hidden">
-    <div *ngFor="let recommendedMovie of recommendations" class="col-md-2 mb-4">
-      <div class="card movie-card h-100 position-relative shadow-sm">
-        <img
-          class="card-img-top rounded"
-          [src]="
-            'https://image.tmdb.org/t/p/w500/' + recommendedMovie.poster_path
-          "
-          [alt]="recommendedMovie.title"
-        />
-        <div class="card-body text-center">
-          <h5 class="card-title">{{ recommendedMovie.title }}</h5>
-
-          <button
-            class="btn btn-warning mt-2"
-            (click)="toggleWatchlist(recommendedMovie)"
-          >
-            <i
-              class="fas fa-heart"
-              [ngClass]="
-                isInWatchlist(recommendedMovie.id)
-                  ? 'text-danger'
-                  : 'text-muted'
-              "
-            ></i>
-          </button>
+  <h4 class="text">Recommended Movies</h4>
+  <div id="recommendationsCarousel" class="carousel slide">
+    <div class="carousel-inner">
+      <!-- Loop through chunks of recommendations -->
+      <ng-container *ngFor="let chunk of chunkedRecommendations(); let i = index">
+        <div class="carousel-item" [class.active]="i === 0">
+          <div class="d-flex">
+            <div *ngFor="let recommendedMovie of chunk" class="col-md-2 mb-4">
+              <div class="card movie-card h-100 position-relative shadow-sm">
+                <img
+                  class="card-img-top rounded"
+                  [src]="'https://image.tmdb.org/t/p/w500/' + recommendedMovie.poster_path"
+                  [alt]="recommendedMovie.title"
+                />
+                <div class="card-body text-center">
+                  <h5 class="card-title">{{ recommendedMovie.title }}</h5>
+                  <button
+                    class="btn btn-link mt-2"
+                    (click)="toggleWatchlist(recommendedMovie)"
+                  >
+                    <i
+                      class="fas fa-heart"
+                      [ngClass]="
+                        isInWatchlist(recommendedMovie.id)
+                          ? 'text-warning'
+                          : 'text-muted'
+                      "
+                    ></i>
+                  </button>
+                   <!-- Navigate to movie details on click -->
+                   <button class="btn btn-warning mt-2" (click)="goToMovieDetails(recommendedMovie.id)">View Details</button>                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <button class="btn btn-warning mt-2" (click)="goToMovieDetails(recommendedMovie.id)">View Details</button>
-
-      </div>
+      </ng-container>
     </div>
+    <a class="carousel-control-prev" href="#recommendationsCarousel" role="button" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#recommendationsCarousel" role="button" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </a>
   </div>
 </div>
