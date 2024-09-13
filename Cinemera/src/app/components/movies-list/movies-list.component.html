@@ -14,6 +14,7 @@
       </div>
     </div>
 
+<<<<<<< HEAD
     <!-- Now Playing Section -->
     <div class="row" style="margin: 30px;">
       <div class="col-12">
@@ -27,6 +28,20 @@
               <div class="card-body text-center">
                 <h5 class="card-title">{{ movie.title }}</h5>
                 <div class="rating-circle" [ngClass]="{
+=======
+  <!-- Now Playing Section -->
+  <div class="row">
+    <div class="col-12">
+      <h3 class="text-warning">Now Playing</h3>
+      <div class="row">
+        <!-- Movie Card -->
+        <div *ngFor="let movie of movies" class="col-md-3 mb-4">
+          <div class="card movie-card h-100 position-relative" >
+            <img class="card-img-top" style="height: 380px;" [src]="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="{{ movie.title }}">
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ movie.title }}</h5>
+              <div class="rating-circle" [ngClass]="{
+>>>>>>> d1b15d59cbcdadc78f03448cda3b3cea0f05d702
                   'rating-low': movie.vote_average <= 5,
                   'rating-mid': movie.vote_average > 5 && movie.vote_average <= 7,
                   'rating-high': movie.vote_average > 7
@@ -41,6 +56,18 @@
                   </button>
                 </div>
               </div>
+<<<<<<< HEAD
+=======
+              <div class="d-flex justify-content-evenly align-items-center">
+              <p class="card-text text-muted m-0">{{ movie.release_date | date:'MMM d, y' }}</p>
+              <button class="btn btn-link" (click)="toggleWatchlist(movie)" >
+                <i class="fas fa-heart "  [ngClass]="isInWatchlist(movie.id) ? 'text-warning' : 'text-muted'"></i>
+              </button>
+          </div>
+          <!-- Navigate to movie details on click -->
+          <button class="btn btn-warning mt-2" (click)="goToMovieDetails(movie.id)">View Details</button>
+         
+>>>>>>> d1b15d59cbcdadc78f03448cda3b3cea0f05d702
             </div>
           </div>
         </div>
