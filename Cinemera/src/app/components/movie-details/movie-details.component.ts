@@ -67,7 +67,6 @@ export class MovieDetailsComponent {
       }
     );
   }
-  // Fetch movie details
   getMovieDetails(id: number): void {
     this.movieService.getCinemeraMovieDetails(id).subscribe((data: Movie) => {
       this.movie = data;

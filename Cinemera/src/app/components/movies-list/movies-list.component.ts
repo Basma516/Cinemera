@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
     MovieCardComponent
   ],
   templateUrl: './movies-list.component.html',
-  styleUrls: ['./movies-list.component.css'] // Corrected here
+  styleUrls: ['./movies-list.component.css'] 
 })
 
 export class MoviesListComponent implements OnInit {
@@ -26,44 +26,35 @@ export class MoviesListComponent implements OnInit {
   constructor(private movieService: MovieService, private router: Router) {}
 
   ngOnInit(): void {
-    this.getMoviesByPage(this.currentPage);  // Load now playing movies on init
-    this.loadWatchlist();  // Load the current watchlist
+    this.getMoviesByPage(this.currentPage);  
+    this.loadWatchlist();  
   }
 
-  // Fetch paginated movies (Now Playing)
   getMoviesByPage(page: number): void {
     this.movieService.getPaginatedMovies(page).subscribe((data: any) => {
       this.movies = data.results;
     });
   }
  
-  // Search movies based on query
   searchMovies(): void {
     if (this.searchQuery.trim()) {
-      // Navigate to search results page with the query
       this.router.navigate(['/search'], { queryParams: { query: this.searchQuery } });
     }
   }
 
-  // Add or Remove movie from the watchlist
  
 
-  // Check if a movie is in the watchlist
-  
-  // Load watchlist from the service
   loadWatchlist(): void {
     this.movieService.getWatchlist().subscribe((watchlist) => {
       this.watchlist = watchlist;
     });
   }
 
-  // Go to the next page
   nextPage(): void {
     this.currentPage++;
     this.getMoviesByPage(this.currentPage);
   }
 
-  // Go to the previous page
   previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;

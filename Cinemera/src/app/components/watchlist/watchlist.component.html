@@ -1,9 +1,10 @@
 <div class="container mt-5">
   <h3 class="text-warning mb-5">Watch list</h3>
-
-  <div *ngIf="watchlist.length > 0; else noMovies">
+@if(watchlist.length > 0){
+  <div >
     <div class="row">
-      <div *ngFor="let movie of watchlist" class="col-md-6 mb-4"> 
+      @for(movie of watchlist; track movie.id){
+      <div  class="col-md-6 mb-4"> 
         <div class="card movie-card h-100 position-relative d-flex">
           <img 
             class="card-img-left" 
@@ -24,10 +25,12 @@
             <p class="text-muted mb-1">{{ movie.release_date | date:'MMM d, y' }}</p>
             
             <div class="rating mb-2" style="gap: 20px;">
-              <ng-container *ngFor="let star of getStars(movie.vote_average)">
+              @for(star of getStars(movie.vote_average); track star){
+              <ng-container >
                 <i class="fa" [ngClass]="star"></i>
                 
               </ng-container>
+            }
               <span class="ml-3">{{ movie.vote_count }}</span>
             </div>
 
@@ -37,9 +40,10 @@
           </div>
         </div>
       </div>
+    }
     </div>
   </div>
-
+}@else{
   <ng-template #noMovies>
     <div class="text-center">
       <img src="/assets/images/heart-slash-svgrepo-com.png" style="width: 250px; height: 250px;">
@@ -49,4 +53,5 @@
       </button>
     </div>
   </ng-template>
+}
 </div>

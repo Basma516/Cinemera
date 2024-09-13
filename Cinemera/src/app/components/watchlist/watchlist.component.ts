@@ -20,12 +20,12 @@ export class WatchlistComponent implements OnInit {
   constructor(private movieService: MovieService, private router: Router) {}
 
   ngOnInit(): void {
-    this.loadWatchlist();  // Load the watchlist when the component initializes
+    this.loadWatchlist();  
   }
 
   loadWatchlist(): void {
     this.movieService.getWatchlist().subscribe((watchlist) => {
-      this.watchlist = watchlist;  // Update the local watchlist
+      this.watchlist = watchlist;  
     });
   }
 

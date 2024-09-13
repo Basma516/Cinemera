@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';  // To get query params
+import { ActivatedRoute, Router } from '@angular/router';  
 import { MovieService } from '../../services/movie.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,21 +13,19 @@ import { FormsModule } from '@angular/forms';
 })
 export class SearchResultsComponent implements OnInit {
   searchResults: any[] = [];
-  searchQuery = '';  // To store the search query
+  searchQuery = '';  
   watchlist: any[] = [];  
 
 
   constructor(private route: ActivatedRoute, private movieService: MovieService, private router: Router) {}
 
   ngOnInit(): void {
-    // Get the search query from URL query params
     this.route.queryParams.subscribe(params => {
       this.searchQuery = params['query'];
-      this.searchMovies(this.searchQuery);  // Fetch movies based on query
+      this.searchMovies(this.searchQuery); 
     });
   }
 
-  // Function to fetch movies based on the search query
   searchMovies(query: string): void {
     if (query.trim()) {
       this.movieService.searchMovies(query).subscribe((data: any) => {
@@ -37,21 +35,18 @@ export class SearchResultsComponent implements OnInit {
   }
 
   goToMovieDetails(movieId: number): void {
-    this.router.navigate(['/movies', movieId]);  // Ensure the route is correctly formed
+    this.router.navigate(['/movies', movieId]);  
   }
-  // Add or Remove movie from the watchlist
   toggleWatchlist(movie: any): void {
-    // Check if the movie already exists in the watchlist
     const movieExists = this.watchlist.some((item) => item.id === movie.id);
     if (movieExists) {
-      this.movieService.removeFromWatchlist(movie);  // Remove the movie from the watchlist
+      this.movieService.removeFromWatchlist(movie);  
     } else {
-      this.movieService.addToWatchlist(movie);  // Add the movie to the watchlist
+      this.movieService.addToWatchlist(movie);  
     }
-    this.loadWatchlist();  // Reload the watchlist after adding/removing
+    this.loadWatchlist();  
   }
 
-  // Check if a movie is in the watchlist
   isInWatchlist(movieId: number): boolean {
     return this.watchlist.some((movie) => movie.id === movieId);
   }
