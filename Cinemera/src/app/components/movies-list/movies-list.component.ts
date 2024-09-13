@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule ,
+    FormsModule,
   ],
   templateUrl: './movies-list.component.html',
-  styleUrl: './movies-list.component.css'
+  styleUrls: ['./movies-list.component.css']
 })
 export class MoviesListComponent implements OnInit {
   movies: any[] = [];
@@ -77,7 +77,6 @@ export class MoviesListComponent implements OnInit {
     if (this.currentPage > 1) {
       this.currentPage--;
       this.getMoviesByPage(this.currentPage);
-    }
-  }
-
+    }
+  }
 }

@@ -25,9 +25,32 @@ export class WatchlistComponent implements OnInit {
     });
   }
 
-  // Remove a movie from the watchlist
-  removeFromWatchlist(movie: any): void {
-    this.movieService.removeFromWatchlist(movie);  // Remove the movie from the service
-    // No need to call loadWatchlist again because the subscription will automatically update the watchlist
+  // Check if a movie is in the watchlist
+  isInWatchlist(movie: any): boolean {
+    return this.watchlist.some((m) => m.id === movie.id);
+  }
+
+  // Toggle movie in/out of watchlist
+  toggleWatchlist(movie: any): void {
+    if (this.isInWatchlist(movie)) {
+      this.movieService.removeFromWatchlist(movie);  // Remove the movie if it's already in the watchlist
+    } else {
+      this.movieService.addToWatchlist(movie);  // Add the movie to the watchlist
+    }
+  }
+
+  // Convert the rating to stars
+  getStars(rating: number): string[] {
+    const maxStars = 5;
+    const filledStars = Math.floor(rating / 2);  
+    const halfStar = (rating % 2) >= 1 ? 1 : 0;
+    const emptyStars = maxStars - filledStars - halfStar;
+
+   
+    return [
+      ...Array(filledStars).fill('fa-solid fa-star'),
+      ...Array(halfStar).fill('fa-solid fa-star-half-alt'),
+      ...Array(emptyStars).fill('fa-regular fa-star')
+    ];
   }
 }

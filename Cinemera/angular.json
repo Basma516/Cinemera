@@ -22,9 +22,9 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
-                "glob": "**/*",
+                "glob": "/*",
                 "input": "public"
-              }
+              },"src/assets"
             ],
             "styles": [
               
@@ -79,12 +79,11 @@
               "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
-            "assets": [
+           "assets": [
               {
-                "glob": "**/*",
+                "glob": "/*",
                 "input": "public"
-              }
-            ],
+              },"src/assets"],
             "styles": [
               "src/styles.css"
             ],
