@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WishlistComponent } from './wishlist.component';
+import { NotFoundComponent } from './not-found.component';
 
-describe('WishlistComponent', () => {
-  let component: WishlistComponent;
-  let fixture: ComponentFixture<WishlistComponent>;
+describe('NotFoundComponent', () => {
+  let component: NotFoundComponent;
+  let fixture: ComponentFixture<NotFoundComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [WishlistComponent]
+      imports: [NotFoundComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(WishlistComponent);
+    fixture = TestBed.createComponent(NotFoundComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

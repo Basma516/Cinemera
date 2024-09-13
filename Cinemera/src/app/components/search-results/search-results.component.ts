@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';  // To get query params
+import { ActivatedRoute, Router } from '@angular/router';  // To get query params
 import { MovieService } from '../../services/movie.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -17,7 +17,7 @@ export class SearchResultsComponent implements OnInit {
   watchlist: any[] = [];  
 
 
-  constructor(private route: ActivatedRoute, private movieService: MovieService) {}
+  constructor(private route: ActivatedRoute, private movieService: MovieService, private router: Router) {}
 
   ngOnInit(): void {
     // Get the search query from URL query params
@@ -36,7 +36,9 @@ export class SearchResultsComponent implements OnInit {
     }
   }
 
-
+  goToMovieDetails(movieId: number): void {
+    this.router.navigate(['/movies', movieId]);  // Ensure the route is correctly formed
+  }
   // Add or Remove movie from the watchlist
   toggleWatchlist(movie: any): void {
     // Check if the movie already exists in the watchlist

@@ -1,15 +1,16 @@
-body{
-    background-color: black;
-  }
+
   
   h1 {
-  color: #ffcc00;
-  font-size: 2.5rem;
-  font-weight: bold;
+    background: linear-gradient(to right, #e3874f, #707070);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2.5rem;
+    font-weight: bold;
   }
   
   p {
-  color: #6c757d;
+  color: #e3874f !important ;
+  font-weight: bold;
   }
   
   .input-group .form-control {
@@ -28,7 +29,7 @@ body{
   
   .movie-card:hover {
   transform: scale(1.05);
-  box-shadow: 0 1px 15px #f0ad4e;
+  box-shadow: 0 1px 15px #e3874f;
   
   }
   
@@ -44,7 +45,7 @@ body{
   
   .btn-link {
   font-size: 1.5rem;
-  color: #f0ad4e;
+  color: #e3874f;
   }
   
   
@@ -69,7 +70,7 @@ body{
   }
   
   .rating-mid {
-  background-color: #ffcc00; 
+  background-color: #f0ad4e; 
   }
   
   .rating-high {
@@ -77,17 +78,17 @@ body{
   }
   
   .pagination .page-item.active .page-link {
-  background-color: #ffcc00;
-  border-color: #ffcc00;
+  background-color: #e3874f;
+  border-color: #e3874f;
   }
   
   .pagination .page-link {
-  color: #ffcc00;
+  color: #e3874f;
   }
   
   .pagination .page-link:hover {
-  background-color: #ffcc00;
-  border-color: #ffcc00;
+  background-color: #e3874f;
+  border-color: #e3874f;
   color: white;
   }
   
@@ -95,9 +96,74 @@ body{
   
   .fa-heart{
   font-size: 20px;
-  color: #ffcc00;
+  color: #e3874f !important;
   }
    .fa-heart-o {
     font-size: 20px;
     color: gray ;
    }
+   .welcome-header {
+    position: relative; 
+    height: 350px;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    color: white;
+    text-align: center; 
+  }
+  
+  .welcome-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/assets/images/background.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    z-index: -1; 
+  }
+  
+  .welcome-header h1,
+  .welcome-header p {
+    color: white; 
+    margin: 7px;
+  }
+  .header-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color:#e3874f;
+   font-weight: bold;
+   text-decoration: none;
+  font-family:Arial, Helvetica, sans-serif;
+   
+  
+  }
+  .btn-search{
+    background-color: #e3874f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  
+  .text{
+    background: linear-gradient(to right, #e3874f, #707070);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 40px;
+  
+  
+  }
+  

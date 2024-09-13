@@ -12,8 +12,9 @@ import { Router } from '@angular/router';
     FormsModule,
   ],
   templateUrl: './movies-list.component.html',
-  styleUrls: ['./movies-list.component.css']  
+  styleUrls: ['./movies-list.component.css'] // Corrected here
 })
+
 export class MoviesListComponent implements OnInit {
   movies: any[] = [];
   currentPage = 1;
@@ -33,7 +34,10 @@ export class MoviesListComponent implements OnInit {
       this.movies = data.results;
     });
   }
-
+  goToMovieDetails(movieId: number): void {
+    this.router.navigate(['/movies', movieId]);  // Ensure the route is correctly formed
+  }
+  
   // Search movies based on query
   searchMovies(): void {
     if (this.searchQuery.trim()) {
@@ -76,6 +80,6 @@ export class MoviesListComponent implements OnInit {
     if (this.currentPage > 1) {
       this.currentPage--;
       this.getMoviesByPage(this.currentPage);
-    }
-  }
+    }
+  }
 }
