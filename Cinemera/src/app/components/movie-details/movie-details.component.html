@@ -12,11 +12,11 @@
 
         <!-- Show image if showPosterLoader is false -->
         <img
-          *ngIf="!showPosterLoader"
-          class="img-fluid rounded shadow"
-          [src]="movie.poster_path"
-          [alt]="movie.title"
-        />
+        *ngIf="!showPosterLoader"
+        class="img-fluid rounded shadow"
+        [src]="movie.poster_path"
+        alt="{{ movie.title }}"
+      />
 
         <div class="overlay">
           <a
