@@ -65,6 +65,34 @@ export class MovieDetailsComponent {
       }
     );
   }
+  goToMovieDetails(movieId: number): void {
+    this.router.navigate(['/movies', movieId]);  // Ensure the route is correctly formed
+    this.movieService.getCinemeraMovieDetails(movieId).subscribe((data: Movie) => {
+      this.movie = data;
+      console.log('Movie details:', this.movie); // Log to check structure
+      this.showPosterLoader = true;
+      this.resizeImage(
+        'https://image.tmdb.org/t/p/w500/' + this.movie.poster_path,
+        500
+      ).then((res) => {
+        if (this.movie) {
+          this.movie.poster_path = res;
+        }
+        this.showPosterLoader = false;
+      });
+      this.movie.production_companies.forEach((company) => {
+        if (company.logo_path) {
+          this.resizeImage(
+            'https://image.tmdb.org/t/p/w500' + company.logo_path,
+            28
+          ).then((res) => {
+            console.log(res);
+            company.logo_path = res;
+          });
+        }
+      });
+    });
+  }
   
   // Fetch movie details
   getMovieDetails(id: number): void {
