@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MovieService } from '../../services/movie.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { Movie } from '../../types/movie';
 
 @Component({
   selector: 'app-watchlist',
@@ -10,36 +12,48 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./watchlist.component.css']
 })
 export class WatchlistComponent implements OnInit {
-  watchlist: any[] = [];  // Store movies in the watchlist
+  watchlist: any[] = [];
+  movies: any[] = [];
+  recommendations: Movie[] = [];
+  showPosterLoader: boolean = false;
 
-  constructor(private movieService: MovieService) {}
+  constructor(private movieService: MovieService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadWatchlist();  // Load the watchlist when the component initializes
   }
 
-  // Load the watchlist from the MovieService
   loadWatchlist(): void {
     this.movieService.getWatchlist().subscribe((watchlist) => {
       this.watchlist = watchlist;  // Update the local watchlist
     });
   }
 
-  // Check if a movie is in the watchlist
-  isInWatchlist(movie: any): boolean {
-    return this.watchlist.some((m) => m.id === movie.id);
+  isInWatchlist(movieId: number): boolean {
+    return this.watchlist.some((movie) => movie.id === movieId);
   }
 
-  // Toggle movie in/out of watchlist
   toggleWatchlist(movie: any): void {
-    if (this.isInWatchlist(movie)) {
-      this.movieService.removeFromWatchlist(movie);  // Remove the movie if it's already in the watchlist
+    const movieExists = this.watchlist.some((item) => item.id === movie.id);
+    if (movieExists) {
+      this.movieService.removeFromWatchlist(movie);
     } else {
-      this.movieService.addToWatchlist(movie);  // Add the movie to the watchlist
+      this.movieService.addToWatchlist(movie);
     }
+    this.loadWatchlist();
   }
 
-  // Convert the rating to stars
+  goToMovieDetails(movieId: number): void {
+    this.router.navigate(['/movies', movieId]);
+  }
+  getStarRating(rating: number) {
+    const fullStars = Math.floor(rating / 2); 
+    const halfStar = rating % 2 >= 1 ? 1 : 0; 
+    const emptyStars = 5 - fullStars - halfStar; 
+
+    return { fullStars, halfStar, emptyStars };
+  }
+
   getStars(rating: number): string[] {
     const maxStars = 5;
     const filledStars = Math.floor(rating / 2);  

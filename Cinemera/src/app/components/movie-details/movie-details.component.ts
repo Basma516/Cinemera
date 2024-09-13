@@ -1,8 +1,8 @@
-// src/app/components/movie-details/movie-details.component.ts
+
 
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MovieService } from '../../services/movie.service'; // Check the path here
+import { MovieService } from '../../services/movie.service';
 import { CommonModule } from '@angular/common';
 import { Movie } from '../../types/movie';
 import { Pipe, PipeTransform } from '@angular/core';
@@ -13,17 +13,17 @@ import { TimeFormatPipe } from '../../pipes/time-format.pipe';
   standalone: true,
   imports: [CommonModule, TimeFormatPipe],
   templateUrl: './movie-details.component.html',
-  styleUrls: ['./movie-details.component.css'], // Changed styleUrl to styleUrls
+  styleUrls: ['./movie-details.component.css'], 
 })
 export class MovieDetailsComponent {
-  movie: Movie | null = null; // Movie details
-  recommendations: Movie[] = []; // Initialize recommendations to an empty array
-  watchlist: Movie[] = []; // Current watchlist
+  movie: Movie | null = null; 
+  recommendations: Movie[] = []; 
+  watchlist: Movie[] = []; 
   popularMovies: Movie[] = [];
   movies: any[] = [];
   showPosterLoader: boolean = false;
   
-  // Define the genre mapping
+ 
   genreMap: { [key: number]: string } = {
     28: 'Action',
     12: 'Adventure',
@@ -59,10 +59,10 @@ export class MovieDetailsComponent {
 
   loadPopularMovies(): void {
     this.movieService.getPopularMovies().subscribe(
-      (data: { results: Movie[] }) => { // Define the structure of 'data'
+      (data: { results: Movie[] }) => { 
         this.popularMovies = data.results;
       },
-      (error: any) => { // Define the type for 'error'
+      (error: any) => { 
         console.error('Error fetching popular movies:', error);
       }
     );
@@ -71,7 +71,7 @@ export class MovieDetailsComponent {
   getMovieDetails(id: number): void {
     this.movieService.getCinemeraMovieDetails(id).subscribe((data: Movie) => {
       this.movie = data;
-      console.log('Movie details:', this.movie); // Log to check structure
+      console.log('Movie details:', this.movie); 
       this.showPosterLoader = true;
       this.resizeImage(
         'https://image.tmdb.org/t/p/w500/' + this.movie.poster_path,
@@ -97,14 +97,13 @@ export class MovieDetailsComponent {
   }
 
   getStarRating(rating: number) {
-    const fullStars = Math.floor(rating / 2); // Full stars (out of 5)
-    const halfStar = rating % 2 >= 1 ? 1 : 0; // Check if there's a half-star
-    const emptyStars = 5 - fullStars - halfStar; // Remaining stars are empty
+    const fullStars = Math.floor(rating / 2); 
+    const halfStar = rating % 2 >= 1 ? 1 : 0; 
+    const emptyStars = 5 - fullStars - halfStar; 
 
     return { fullStars, halfStar, emptyStars };
   }
 
-  // Fetch movie recommendations
   getRecommendations(movieId: number): void {
     this.movieService
       .getCinemeraRecommendations(movieId)
@@ -113,14 +112,14 @@ export class MovieDetailsComponent {
       });
   }
 
-  // Load watchlist
+ 
   loadWatchlist(): void {
     this.movieService.getWatchlist().subscribe((watchlist) => {
       this.watchlist = watchlist;
     });
   }
 
-  // Add or remove movie from watchlist
+  
   toggleWatchlist(movie: Movie): void {
     const isMovieInWatchlist = this.watchlist.some(
       (item) => item.id === movie.id
@@ -130,26 +129,25 @@ export class MovieDetailsComponent {
     } else {
       this.movieService.addToWatchlist(movie);
     }
-    this.loadWatchlist(); // Reload watchlist after updating
+    this.loadWatchlist(); 
   }
 
-  // Check if the movie is already in the watchlist
   isInWatchlist(movieId: number): boolean {
     return this.watchlist.some((movie) => movie.id === movieId);
   }
 
-  // Navigate back to movies list
+ 
   goBack(): void {
-    this.router.navigate(['']); // Adjust the route to your movie list page
+    this.router.navigate(['']);
   }
   async resizeImage(url: string, height: number): Promise<string> {
     return new Promise((resolve, reject) => {
-      // Create a new image element
+     
       const img = new Image();
-      img.crossOrigin = 'Anonymous'; // Handle CORS if needed
+      img.crossOrigin = 'Anonymous'; 
 
       img.onload = () => {
-        // Create a canvas element
+       
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
 
@@ -158,18 +156,16 @@ export class MovieDetailsComponent {
           return;
         }
 
-        // Calculate the new width to maintain the aspect ratio
+        
         const aspectRatio = img.width / img.height;
         const width = height * aspectRatio;
 
-        // Set canvas dimensions
+        
         canvas.width = width;
         canvas.height = height;
 
-        // Draw the image onto the canvas
         ctx.drawImage(img, 0, 0, width, height);
 
-        // Convert canvas content to data URL
         const dataURL = canvas.toDataURL('image/png');
         resolve(dataURL);
       };
@@ -191,10 +187,10 @@ export class MovieDetailsComponent {
     return result;
   }
   goToMovieDetails(movieId: number): void {
-    this.router.navigate(['/movies', movieId]);  // Ensure the route is correctly formed
+    this.router.navigate(['/movies', movieId]); 
     this.movieService.getCinemeraMovieDetails(movieId).subscribe((data: Movie) => {
       this.movie = data;
-      console.log('Movie details:', this.movie); // Log to check structure
+      console.log('Movie details:', this.movie); 
       this.showPosterLoader = true;
       this.resizeImage(
         'https://image.tmdb.org/t/p/w500/' + this.movie.poster_path,

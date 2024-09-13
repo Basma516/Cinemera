@@ -14,15 +14,15 @@
           <div class="card-body">
             <div class="d-flex justify-content-between">
               <h5 class="card-title">{{ movie.title }}</h5>
+              
               <button class="btn btn-link p-0" (click)="toggleWatchlist(movie)">
                 <i class="fa-solid fa-heart" 
-                   [ngClass]="{'text-warning': isInWatchlist(movie), 'text-muted': !isInWatchlist(movie)}"></i>
+                   [ngClass]="{'text-warning': isInWatchlist(movie.id), 'text-muted': !isInWatchlist(movie.id)}"></i>
               </button>
             </div>
 
             <p class="text-muted mb-1">{{ movie.release_date | date:'MMM d, y' }}</p>
-
-           
+            
             <div class="rating mb-2" style="gap: 20px;">
               <ng-container *ngFor="let star of getStars(movie.vote_average)">
                 <i class="fa" [ngClass]="star"></i>
@@ -32,20 +32,18 @@
             </div>
 
             <p class="card-text">{{ movie.overview | slice:0:100 }}...</p>
-
-            
+            <!-- View Details Button -->
+            <button class="btn btn-warning mt-2" (click)="goToMovieDetails(movie.id)">View Details</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-
   <ng-template #noMovies>
     <div class="text-center">
-      <img src="/assets/images/heart-slash-svgrepo-com.png" style="width: 250px; height: 250px;"> <!-- Heart icon with a line through it -->
+      <img src="/assets/images/heart-slash-svgrepo-com.png" style="width: 250px; height: 250px;">
       <p class="mt-3" style="font-size: 30px;">No Movies in Watchlist</p>
-
       <button class="btn custom-btn mt-3">
         <a href="/" class="header-title">Back to Home</a>
       </button>
