@@ -15,6 +15,9 @@ export class MovieService {
   constructor(private http: HttpClient) {
     this.loadWatchlistFromLocalStorage();
   }
+  getPopularMovies(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/movie/popular?api_key=${this.apiKey}`);
+  }
 
   // Fetch now playing movies
   getCinemeraMovies(): Observable<any> {
@@ -56,6 +59,7 @@ export class MovieService {
     this.watchlist.next(updatedWatchlist);
     localStorage.setItem('watchlist', JSON.stringify(updatedWatchlist));  // Save to localStorage
   }
+ 
 
   // Load watchlist from localStorage
   private loadWatchlistFromLocalStorage(): void {
@@ -69,4 +73,5 @@ export class MovieService {
   private saveWatchlistToLocalStorage(watchlist: any[]): void {
     localStorage.setItem('watchlist', JSON.stringify(watchlist));
   }
+
 }

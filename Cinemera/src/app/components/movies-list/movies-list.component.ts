@@ -12,8 +12,9 @@ import { Router } from '@angular/router';
     FormsModule,
   ],
   templateUrl: './movies-list.component.html',
-  styleUrls: ['./movies-list.component.css']
+  styleUrls: ['./movies-list.component.css'] // Corrected here
 })
+
 export class MoviesListComponent implements OnInit {
   movies: any[] = [];
   currentPage = 1;

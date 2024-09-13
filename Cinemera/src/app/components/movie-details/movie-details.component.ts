@@ -11,7 +11,7 @@ import { TimeFormatPipe } from '../../pipes/time-format.pipe';
 @Component({
   selector: 'app-movie-details',
   standalone: true,
-  imports: [CommonModule,TimeFormatPipe],
+  imports: [CommonModule, TimeFormatPipe],
   templateUrl: './movie-details.component.html',
   styleUrls: ['./movie-details.component.css'], // Changed styleUrl to styleUrls
 })
@@ -20,7 +20,9 @@ export class MovieDetailsComponent {
   recommendations: Movie[] = []; // Initialize recommendations to an empty array
   watchlist: Movie[] = []; // Current watchlist
   popularMovies: Movie[] = [];
+  movies: any[] = [];
   showPosterLoader: boolean = false;
+  
   // Define the genre mapping
   genreMap: { [key: number]: string } = {
     28: 'Action',
@@ -45,7 +47,7 @@ export class MovieDetailsComponent {
     private route: ActivatedRoute,
     private movieService: MovieService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const movieId = +this.route.snapshot.paramMap.get('id')!;
@@ -65,7 +67,7 @@ export class MovieDetailsComponent {
       }
     );
   }
-  
+
   // Fetch movie details
   getMovieDetails(id: number): void {
     this.movieService.getCinemeraMovieDetails(id).subscribe((data: Movie) => {
@@ -180,4 +182,43 @@ export class MovieDetailsComponent {
       img.src = url;
     });
   }
+
+  chunkedRecommendations(): Movie[][] {
+    const chunkSize = 5;
+    const result: Movie[][] = [];
+    for (let i = 0; i < this.recommendations.length; i += chunkSize) {
+      result.push(this.recommendations.slice(i, i + chunkSize));
+    }
+    return result;
+  }
+  goToMovieDetails(movieId: number): void {
+    this.router.navigate(['/movies', movieId]);  // Ensure the route is correctly formed
+    this.movieService.getCinemeraMovieDetails(movieId).subscribe((data: Movie) => {
+      this.movie = data;
+      console.log('Movie details:', this.movie); // Log to check structure
+      this.showPosterLoader = true;
+      this.resizeImage(
+        'https://image.tmdb.org/t/p/w500/' + this.movie.poster_path,
+        500
+      ).then((res) => {
+        if (this.movie) {
+          this.movie.poster_path = res;
+        }
+        this.showPosterLoader = false;
+      });
+      this.movie.production_companies.forEach((company) => {
+        if (company.logo_path) {
+          this.resizeImage(
+            'https://image.tmdb.org/t/p/w500' + company.logo_path,
+            28
+          ).then((res) => {
+            console.log(res);
+            company.logo_path = res;
+          });
+        }
+      });
+    });
+  }
+
+
 }
