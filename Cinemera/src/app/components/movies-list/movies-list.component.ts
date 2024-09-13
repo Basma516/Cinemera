@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule ,
+    FormsModule,
   ],
   templateUrl: './movies-list.component.html',
-  styleUrl: './movies-list.component.css'
+  styleUrls: ['./movies-list.component.css']  
 })
 export class MoviesListComponent implements OnInit {
   movies: any[] = [];
@@ -44,7 +44,6 @@ export class MoviesListComponent implements OnInit {
 
   // Add or Remove movie from the watchlist
   toggleWatchlist(movie: any): void {
-    // Check if the movie already exists in the watchlist
     const movieExists = this.watchlist.some((item) => item.id === movie.id);
     if (movieExists) {
       this.movieService.removeFromWatchlist(movie);  // Remove the movie from the watchlist
@@ -79,5 +78,4 @@ export class MoviesListComponent implements OnInit {
       this.getMoviesByPage(this.currentPage);
     }
   }
-
 }

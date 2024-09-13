@@ -1,0 +1,103 @@
+body{
+    background-color: black;
+  }
+  
+  h1 {
+  color: #ffcc00;
+  font-size: 2.5rem;
+  font-weight: bold;
+  }
+  
+  p {
+  color: #6c757d;
+  }
+  
+  .input-group .form-control {
+  border-right: 0;
+  border-radius: 20px 0 0 20px;
+  }
+  
+  .input-group .input-group-append .btn {
+  border-left: 0;
+  border-radius: 0 20px 20px 0;
+  }
+  
+  .movie-card {
+  transition: transform 0.3s ease-in-out;
+  }
+  
+  .movie-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 1px 15px #f0ad4e;
+  
+  }
+  
+  .card-title {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  }
+  
+  .card-text {
+  font-size: 0.85rem;
+  }
+  
+  .btn-link {
+  font-size: 1.5rem;
+  color: #f0ad4e;
+  }
+  
+  
+  .rating-circle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  box-shadow: 0 1px 10px white;
+  }
+  
+  .rating-low {
+  background-color: #dc3545; 
+  }
+  
+  .rating-mid {
+  background-color: #ffcc00; 
+  }
+  
+  .rating-high {
+  background-color: #28a745; 
+  }
+  
+  .pagination .page-item.active .page-link {
+  background-color: #ffcc00;
+  border-color: #ffcc00;
+  }
+  
+  .pagination .page-link {
+  color: #ffcc00;
+  }
+  
+  .pagination .page-link:hover {
+  background-color: #ffcc00;
+  border-color: #ffcc00;
+  color: white;
+  }
+  
+  
+  
+  .fa-heart{
+  font-size: 20px;
+  color: #ffcc00;
+  }
+   .fa-heart-o {
+    font-size: 20px;
+    color: gray ;
+   }
