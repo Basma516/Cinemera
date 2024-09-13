@@ -10,7 +10,6 @@
           </div>
         </div>
 
-        <!-- Show image if showPosterLoader is false -->
         <img
         *ngIf="!showPosterLoader"
         class="img-fluid rounded shadow"
@@ -38,7 +37,6 @@
       </p>
 
       <div class="star-rating mb-2">
-        <!-- Display Full Stars -->
         <ng-container
           *ngFor="
             let star of [].constructor(
@@ -49,12 +47,11 @@
           <i class="fas fa-star text-warning"></i>
         </ng-container>
 
-        <!-- Display Half Star if applicable -->
         <ng-container *ngIf="getStarRating(movie.vote_average).halfStar">
           <i class="fas fa-star-half-alt text-warning"></i>
         </ng-container>
 
-        <!-- Display Empty Stars -->
+      
         <ng-container
           *ngFor="
             let star of [].constructor(
@@ -69,7 +66,7 @@
 
       <p class="mt-3 text-justify movie-description" style="color: white !important ;">{{ movie.overview }}</p>
 
-      <!-- Displaying genres as badges -->
+     
       <div *ngIf="movie">
         <div class="mb-4">
           <span

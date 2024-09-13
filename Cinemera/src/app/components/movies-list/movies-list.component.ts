@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MovieService } from '../../services/movie.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';  
+import { MovieCardComponent } from '../../movie-card/movie-card.component';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,6 +11,7 @@ import { Router } from '@angular/router';
   imports: [
     CommonModule,
     FormsModule,
+    MovieCardComponent
   ],
   templateUrl: './movies-list.component.html',
   styleUrls: ['./movies-list.component.css'] // Corrected here
@@ -34,10 +36,7 @@ export class MoviesListComponent implements OnInit {
       this.movies = data.results;
     });
   }
-  goToMovieDetails(movieId: number): void {
-    this.router.navigate(['/movies', movieId]);  // Ensure the route is correctly formed
-  }
-  
+ 
   // Search movies based on query
   searchMovies(): void {
     if (this.searchQuery.trim()) {
@@ -47,21 +46,10 @@ export class MoviesListComponent implements OnInit {
   }
 
   // Add or Remove movie from the watchlist
-  toggleWatchlist(movie: any): void {
-    const movieExists = this.watchlist.some((item) => item.id === movie.id);
-    if (movieExists) {
-      this.movieService.removeFromWatchlist(movie);  // Remove the movie from the watchlist
-    } else {
-      this.movieService.addToWatchlist(movie);  // Add the movie to the watchlist
-    }
-    this.loadWatchlist();  // Reload the watchlist after adding/removing
-  }
+ 
 
   // Check if a movie is in the watchlist
-  isInWatchlist(movieId: number): boolean {
-    return this.watchlist.some((movie) => movie.id === movieId);
-  }
-
+  
   // Load watchlist from the service
   loadWatchlist(): void {
     this.movieService.getWatchlist().subscribe((watchlist) => {
