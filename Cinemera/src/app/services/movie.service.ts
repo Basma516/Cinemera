@@ -54,4 +54,5 @@ export class MovieService {
   getPopularMovies(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/movie/popular?api_key=${this.apiKey}`);
   }
+  
 }

@@ -2,7 +2,7 @@
 
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MovieService } from '../../services/movie.service';
+import { MovieService } from '../../services/movie.service'; // Check the path here
 import { CommonModule } from '@angular/common';
 import { Movie } from '../../types/movie';
 import { Pipe, PipeTransform } from '@angular/core';
@@ -57,14 +57,15 @@ export class MovieDetailsComponent {
 
   loadPopularMovies(): void {
     this.movieService.getPopularMovies().subscribe(
-      (data) => {
+      (data: { results: Movie[] }) => { // Define the structure of 'data'
         this.popularMovies = data.results;
       },
-      (error) => {
+      (error: any) => { // Define the type for 'error'
         console.error('Error fetching popular movies:', error);
       }
     );
   }
+  
   // Fetch movie details
   getMovieDetails(id: number): void {
     this.movieService.getCinemeraMovieDetails(id).subscribe((data: Movie) => {
